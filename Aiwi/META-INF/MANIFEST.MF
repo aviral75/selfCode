@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Aiwi
+Bundle-SymbolicName: Aiwi;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: aiwi.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: lib/jdom.jar,
+ lib/rome-1.0.jar,
+ lib/rome-fetcher-1.0.0.jar,
+ .
