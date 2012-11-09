@@ -68,8 +68,8 @@ public class CommonStocks {
 			List<String> result1Stocks=new ArrayList<String>();
 			if(!useCache)
 				StockPoll.poll();
-			String prevDayFile="C:\\temp\\data\\stock_2012_11_07.txt";
-			String curDayFile="C:\\temp\\data\\stock_2012_11_08.txt";
+			String prevDayFile="C:\\temp\\data\\stock_2012_11_08.txt";
+			String curDayFile="C:\\temp\\data\\stock_2012_11_09.txt";
 			Set<String> stockNames1 =getStockLookup(prevDayFile);
 			Set<String> stockNames2 = getStockLookup(curDayFile);
 			Set<String> commonStocks = getIntersection(stockNames1, stockNames2);
@@ -98,8 +98,13 @@ public class CommonStocks {
 //			}
 			
 			
-			
-			String[] names=new String[]{"VKS PROJECTS","BROOKS LABS","CINEPRO","REL BANK ETF"};
+
+		  
+		    
+		    
+		    
+
+			String[] names=new String[]{"KIRL INVEST","VARUN INDS","INDOSOLAR","KAUSHAL INFR"};
 for (String stkName : names) {
 	String scriptCode = StockLoader.provider.getScriptCode(stkName);
 	System.out.println(StockPoll.getPerformancePercent(scriptCode));
