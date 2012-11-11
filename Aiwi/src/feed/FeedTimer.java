@@ -52,9 +52,10 @@ public class FeedTimer {
 							List<SyndEntryImpl> keepReadingFeeds = reader.keepReadingFeeds(url);
 							List<SyndEntryImpl> toAdd=new ArrayList<SyndEntryImpl>();
 							if(input instanceof ArrayList<?>)
-								for (SyndEntryImpl syndEntryImpl : keepReadingFeeds)
+								for (SyndEntryImpl syndEntryImpl : keepReadingFeeds){
 									if(!((ArrayList<SyndEntryImpl>) input).contains(syndEntryImpl))
 										toAdd.add(syndEntryImpl);
+								}
 							((ArrayList<SyndEntryImpl>) input).addAll(toAdd);
 							viewer.setInput(input);
 							viewer.refresh();
@@ -108,7 +109,10 @@ public class FeedTimer {
 						if (aEvent.stateMask == SWT.CTRL)
 							item.dispose ();
 						else
-							tip.setVisible(true);
+							{
+								tip.setVisible(true);
+
+							}
 					}
 				});
 
