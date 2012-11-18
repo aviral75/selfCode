@@ -10,7 +10,7 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 
 public class TwitterSearch {
-
+	
 	public static String searchTweet(String searchString) {
 			StringBuilder tweeted=new StringBuilder();
 			Twitter twitter = new TwitterFactory().getInstance();
@@ -35,6 +35,7 @@ public class TwitterSearch {
 	}
 	
 	public static void main(String[] args) {
-		searchTweet("aviral75");
+		String searchTweet = searchTweet("RAJ TELE");
+		System.out.println(searchTweet);
 	}
 }

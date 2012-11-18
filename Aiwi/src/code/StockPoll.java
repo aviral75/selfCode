@@ -26,6 +26,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import aiwi.Messages;
+
 public class StockPoll {
 	public static double PERCENT=4.70;
 
@@ -36,9 +38,9 @@ public class StockPoll {
 	public static Date poll() {
 		URL url;
 		long t=System.currentTimeMillis();
-		DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd"); //$NON-NLS-1$
 		Date date = new Date();
-		String fileName = "C:\\temp\\data\\stock_"+dateFormat.format(date)+".txt";
+		String fileName = Messages.StockPoll_STOCK_XML+dateFormat.format(date)+".txt"; //$NON-NLS-2$
 		File file = new File(fileName);
 		try {
 		if (!file.exists()) {
@@ -51,9 +53,9 @@ public class StockPoll {
 			BufferedWriter bw = new BufferedWriter(fw);
 
 			// get URL content
-			List<Integer> integersFromFile = IntegerReading.getIntegersFromFile("C:\\temp\\stock.txt");
+			List<Integer> integersFromFile = IntegerReading.getIntegersFromFile(Messages.StockPoll_NUMBER_READING);
 			for (Integer number : integersFromFile) {
-				url = new URL("http://www.stockstobuynow.in/applications/api/stockapp/quotes/"+number+".xml");
+				url = new URL("http://www.stockstobuynow.in/applications/api/stockapp/quotes/"+number+".xml"); //$NON-NLS-1$ //$NON-NLS-2$
 				URLConnection conn = url.openConnection();
 
 				BufferedReader br = new BufferedReader(
@@ -65,10 +67,10 @@ public class StockPoll {
 				//			String inputLine=br.readLine();
 				//
 				br.close();
-				System.out.println("number " + number);
+				System.out.println("number " + number); //$NON-NLS-1$
 
 			}
-			System.out.println("Done in " + (System.currentTimeMillis()-t));
+			System.out.println("Done in " + (System.currentTimeMillis()-t)); //$NON-NLS-1$
 			bw.close();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -87,39 +89,39 @@ public class StockPoll {
 			Document doc = dBuilder.parse(inputStream);
 			doc.getDocumentElement().normalize();
 
-			NodeList nList = doc.getElementsByTagName("Scrip");
+			NodeList nList = doc.getElementsByTagName("Scrip"); //$NON-NLS-1$
 			List<Double> percentList=new ArrayList<Double>(); 
-			String lastStock="";
-			String scripCode="";
+			String lastStock=""; //$NON-NLS-1$
+			String scripCode=""; //$NON-NLS-1$
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 
 				Node nNode = nList.item(temp);
 				if (nNode!=null && nNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element eElement = (Element) nNode;
-					scripCode = getTagValue("scripCode", eElement);
+					scripCode = getTagValue("scripCode", eElement); //$NON-NLS-1$
 					
-					String closeValue = getTagValue("close", eElement);
+					String closeValue = getTagValue("close", eElement); //$NON-NLS-1$
 					double close = Double.parseDouble(closeValue);
-					String prevCloseValue = getTagValue("prevClose", eElement);
+					String prevCloseValue = getTagValue("prevClose", eElement); //$NON-NLS-1$
 					double prevClose = Double.parseDouble(prevCloseValue);
 					double percent=((close-prevClose)/prevClose)*100;
-					lastStock= getTagValue("scripName", eElement);
+					lastStock= getTagValue("scripName", eElement); //$NON-NLS-1$
 					percentList.add(percent);
 				}
 			}
 			for (Double double1 : percentList) {
 				if(double1 > PERCENT && percentList.get(0) >1.0){
-					bw.write(lastStock+",");
-					lastStock="";
+					bw.write(lastStock+","); //$NON-NLS-1$
+					lastStock=""; //$NON-NLS-1$
 					break;
 				}
 			}
 			if(lastStock.isEmpty()){
 				for (Double double1 : percentList) 
-					bw.write(double1+",");
+					bw.write(double1+","); //$NON-NLS-1$
 				if(percentList.size()>0){
 					bw.write(scripCode);
-					bw.write("\n");
+					bw.write("\n"); //$NON-NLS-1$
 				}
 			}
 		} catch (Exception e) {
@@ -131,7 +133,7 @@ public class StockPoll {
 		double percent=0.0;
 		URL url;
 		try {
-			url = new URL("http://www.stockstobuynow.in/applications/api/stockapp/quotes/"+number+".xml");
+			url = new URL("http://www.stockstobuynow.in/applications/api/stockapp/quotes/"+number+".xml"); //$NON-NLS-1$ //$NON-NLS-2$
 
 			URLConnection conn = url.openConnection();
 
@@ -143,16 +145,16 @@ public class StockPoll {
 			Document doc = dBuilder.parse(conn.getInputStream());
 			doc.getDocumentElement().normalize();
 
-			NodeList nList = doc.getElementsByTagName("Scrip");
+			NodeList nList = doc.getElementsByTagName("Scrip"); //$NON-NLS-1$
 			List<Double> percentList=new ArrayList<Double>(); 
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 
 				Node nNode = nList.item(temp);
 				if (nNode!=null && nNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element eElement = (Element) nNode;
-					String closeValue = getTagValue("close", eElement);
+					String closeValue = getTagValue("close", eElement); //$NON-NLS-1$
 					double close = Double.parseDouble(closeValue);
-					String prevCloseValue = getTagValue("prevClose", eElement);
+					String prevCloseValue = getTagValue("prevClose", eElement); //$NON-NLS-1$
 					double prevClose = Double.parseDouble(prevCloseValue);
 					percent=((close-prevClose)/prevClose)*100;
 					percentList.add(percent);

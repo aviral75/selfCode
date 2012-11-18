@@ -10,13 +10,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import aiwi.Messages;
+
 public class ReadURL {
 	public static void main(String[] args) {
 
 		URL url;
 		int j=528000;
 		//save to this filename
-		String fileName = "C:\\temp\\stock\\lookup.xml";
+		String fileName = Messages.ReadURL_SAVE_URL_LOCATION;
 		try {
 			File file = new File(fileName);
 
@@ -31,7 +33,7 @@ public class ReadURL {
 			for(int number=j;number<530000;number+=1 ){
 				// get URL content
 
-				url = new URL("http://www.stockstobuynow.in/applications/api/stockapp/quotes/"+number+".xml");
+				url = new URL("http://www.stockstobuynow.in/applications/api/stockapp/quotes/"+number+".xml"); //$NON-NLS-1$ //$NON-NLS-2$
 				URLConnection conn = url.openConnection();
 
 				// open the stream and put it into BufferedReader
@@ -45,15 +47,15 @@ public class ReadURL {
 
 				boolean done=false;
 				do{
-					int startIndex1=inputLine.indexOf("<scripCode>");
-					int endIndex1 = inputLine.indexOf("</scripCode>");
+					int startIndex1=inputLine.indexOf("<scripCode>"); //$NON-NLS-1$
+					int endIndex1 = inputLine.indexOf("</scripCode>"); //$NON-NLS-1$
 					String substring = inputLine.substring(startIndex1,endIndex1+12);
 					bw.write(substring);
 
-					startIndex1=inputLine.indexOf("<scripName>");
-					endIndex1 = inputLine.indexOf("</scripName>");
+					startIndex1=inputLine.indexOf("<scripName>"); //$NON-NLS-1$
+					endIndex1 = inputLine.indexOf("</scripName>"); //$NON-NLS-1$
 					substring = inputLine.substring(startIndex1,endIndex1+12);
-					bw.write(substring + "\n");
+					bw.write(substring + "\n"); //$NON-NLS-1$
 					done=true;
 				}while (((inputLine = br.readLine()) != null)||(!done));
 				br.close();
@@ -64,7 +66,7 @@ public class ReadURL {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally{
-			System.out.println("Done");
+			System.out.println("Done"); //$NON-NLS-1$
 		}
 	}
 }

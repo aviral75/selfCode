@@ -16,83 +16,14 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+import aiwi.Messages;
+
 public class GetPercentage {
 	public static void main(String[] args) {
-		String[] names=new String[]{
-				"20MICRONS ",
-		"ACE ",
-		"ANTGRAPHI ",
-		"ASSAMCO ",
-		"BIL ",
-		"BIRLACOT ",
-		"BIRLAERIC ",
-		"BIRLAPOWE ",
-		"CINEMAXIN ",
-		"CREWBOS ",
-		"CROMPGREA ",
-		"ELDERPHAR ",
-		"ELGIRUBCO ",
-		"FCH ",
-		"FCSSOFT ",
-		"FMNL ",
-		"GAEL ",
-		"GKB ",
-		"GOACARBON ",
-		"GOENKA ",
-		"GOKEX ",
-		"GREENFIRE ",
-		"HBSTOCK ",
-		"HELIOSMAT ",
-		"INDIANHUM ",
-		"ITDCEM ",
-		"JCTEL ",
-		"JOCIL ",
-		"KEI ",
-		"KIL ",
-		"KIRIINDUS ",
-		"KTIL ",
-		"KWALITY ",
-		"LCCINFOTE ",
-		"MAITHANAL ",
-		"MALWACOTT ",
-		"MANGALAM ",
-		"MEGH ",
-		"MUDRA ",
-		"MUKTAARTS ",
-		"NUCENT ",
-		"ONELIFECA ",
-		"PARABDRUG ",
-		"PARACABLE ",
-		"PEACOCKIN ",
-		"PHILIPCAR ",
-		"POLARIND ",
-		"PRADIP ",
-		"PROVOGE ",
-		"RATNAMANI ",
-		"RESPONIND ",
-		"ROSSELLIN ",
-		"SHAKTIPUM ",
-		"SIMPLEXCA ",
-		"SOFTTECHG ",
-		"SRGINFOTE ",
-		"SUBROS ",
-		"SUDAR ", 
-		"SYNCOM ",
-		"TRF ",
-		"USHAMART ",
-		"UTTAMSUGA ",
-		"VADILALIN ",
-		"VSTTILLER ",
-		"WHEELS ",
-		"ZODJRDMKJ ",
-		"ZYLOG" 
-		};
-		
-
 //	    String[] names1= new String[]{"CINEMAXIN","HOTELRUGB","RASOYPR","THEBYKE"};
 
 		List<String> tickrList=new ArrayList<String>();
-		File f=new File("C:\\temp\\NseSymbolList.txt");
+		File f=new File(Messages.GetPercentage_NSELIST);
 		Scanner scanner;
 		try {
 			scanner = new Scanner(new FileInputStream(f));
@@ -110,7 +41,7 @@ public class GetPercentage {
 		for (String string : tickrList) {
 			percent=getStockPerformance(string.trim());
 			if(percent>5.0)
-			System.out.println(string+" :: "+ percent);
+			System.out.println(string+" :: "+ percent); //$NON-NLS-1$
 		}
 	
 		
@@ -123,7 +54,7 @@ public class GetPercentage {
 		
 			URL url = null;
 			try {
-				url=new URL("http://download.finance.yahoo.com/d/quotes.csv?s=%22"+stockSymbol+".NS%22&f=sohgpl1c1p2d1t1k3&e=.csv");
+				url=new URL("http://download.finance.yahoo.com/d/quotes.csv?s=%22"+stockSymbol+".NS%22&f=sohgpl1c1p2d1t1k3&e=.csv"); //$NON-NLS-1$ //$NON-NLS-2$
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -148,7 +79,7 @@ public class GetPercentage {
 
 			BufferedInputStream bis = new BufferedInputStream(inputStream);
 
-			File file = new File("C:\\temp\\dataNse\\"+stockSymbol+".csv");
+			File file = new File(Messages.GetPercentage_NSEFOLDER+stockSymbol+".csv"); //$NON-NLS-2$
 			try {
 				file.createNewFile();
 			} catch (IOException e2) {
@@ -157,7 +88,7 @@ public class GetPercentage {
 			}
 			if(!file.exists())
 			{
-				System.out.println("File " + file + " could not be created");
+				System.out.println("File " + file + " could not be created"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			
 
@@ -197,9 +128,9 @@ public class GetPercentage {
 		    BufferedReader reader=null;
 		    try {
 		    	reader = new BufferedReader(new FileReader(file));
-		    	String line = "";  
+		    	String line = "";   //$NON-NLS-1$
 		    	while ((line = reader.readLine()) != null) {  
-		    		StringTokenizer tokenizer = new StringTokenizer(line,",");  
+		    		StringTokenizer tokenizer = new StringTokenizer(line,",");   //$NON-NLS-1$
 		    		int columnIndex = 0;  
 		    		while (tokenizer.hasMoreTokens()) {  
 

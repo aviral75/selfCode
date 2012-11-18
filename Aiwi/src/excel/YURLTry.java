@@ -13,18 +13,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import aiwi.Messages;
+
 public class YURLTry {
 	
 	public static List<String> readInputFromFile() throws FileNotFoundException{
 		List<String> tickrList=new ArrayList<String>();
-		File f=new File("C:\\Aviral\\stkData\\NseSymbolList.txt");
+		File f=new File(Messages.YURLTry_NSELIST);
 		Scanner scanner=new Scanner(new FileInputStream(f));
 		while(scanner.hasNext()){
 			String next = scanner.next();
 			if(next.length() > 9 )
 				next=next.substring(0,9);
-			if(!next.startsWith("^"))
-					next=next+".NS";
+			if(!next.startsWith("^")) //$NON-NLS-1$
+					next=next+".NS"; //$NON-NLS-1$
 			tickrList.add(next);
 		}
 		return tickrList;
@@ -45,11 +47,11 @@ public class YURLTry {
 
 	
 public static void writeData(String stockSymbol) {
-	 	String sD="&a=0&b=1&c=2012"; //0 means month jan;1 is 1st jan 2012 is year
-    	String eD="&d=10&e=7&f=2012";//7-11-12
+	 	String sD="&a=0&b=1&c=2012"; //0 means month jan;1 is 1st jan 2012 is year //$NON-NLS-1$
+    	String eD="&d=10&e=16&f=2012";//16-11-12 //$NON-NLS-1$
 		URL url = null;
 		try {
-			url= new URL("http://ichart.finance.yahoo.com/table.csv?s="+stockSymbol+sD+eD+"&ignore=.csv");
+			url= new URL("http://ichart.finance.yahoo.com/table.csv?s="+stockSymbol+sD+eD+"&ignore=.csv"); //$NON-NLS-1$ //$NON-NLS-2$
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -75,7 +77,7 @@ public static void writeData(String stockSymbol) {
 
 		BufferedInputStream bis = new BufferedInputStream(inputStream);
 
-		File file = new File("C:\\Aviral\\stkData\\dataNse\\"+stockSymbol+".csv");
+		File file = new File(Messages.YURLTry_NSEFOLDER+stockSymbol+".csv"); //$NON-NLS-2$
 		try {
 			file.createNewFile();
 		} catch (IOException e2) {
@@ -84,7 +86,7 @@ public static void writeData(String stockSymbol) {
 		}
 		if(!file.exists())
 		{
-			System.out.println("File " + file + " could not be created");
+			System.out.println("File " + file + " could not be created"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
 		FileOutputStream fileOutputStream = null;

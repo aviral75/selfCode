@@ -15,6 +15,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 
+import aiwi.Messages;
+
 public class XlsDataReader {
 	
 	public static void main(String[] args) {
@@ -22,19 +24,19 @@ public class XlsDataReader {
 	}
 	public static void populateAllData(){
 		try {
-			FileOutputStream fileOut = new FileOutputStream("C:\\Aviral\\stkData\\AllStkDataNse.xls");
+			FileOutputStream fileOut = new FileOutputStream(Messages.XlsDataReader_ALL_NSE_XLS);
 			HSSFWorkbook workbook = new HSSFWorkbook();
-			HSSFSheet worksheet = workbook.createSheet("AllStkData");
+			HSSFSheet worksheet = workbook.createSheet("AllStkData"); //$NON-NLS-1$
 			
 			writeHeaderData(workbook, worksheet);
 			int i=1;
-			String baseDir="C:\\Aviral\\stkData\\xlsdataNse";
+			String baseDir=Messages.XlsDataReader_XLS_NSEFOLDER;
 			File inputDir=new File(baseDir);
 			String[] list = inputDir.list();
 			for (String string : list) {
 				ExcelFields data=getValuesFrom(baseDir+File.separator+string,string);
 				writeDataFrom(data,workbook,worksheet,i++);
-				System.out.println("done with " + string);
+				System.out.println("done with " + string); //$NON-NLS-1$
 			}
 			workbook.write(fileOut);
 			fileOut.flush();
@@ -100,28 +102,29 @@ public class XlsDataReader {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	private static void writeHeaderData(HSSFWorkbook workbook,HSSFSheet worksheet) {
 
 		HSSFRow row1 = worksheet.createRow((short) 0);
  
 		
 		HSSFCell cellA1 = row1.createCell((short) 0);
-		cellA1.setCellValue("Symbol");
+		cellA1.setCellValue("Symbol"); //$NON-NLS-1$
 
 		HSSFCell cellB1 = row1.createCell((short) 1);
-		cellB1.setCellValue("Total daily return");
+		cellB1.setCellValue("Total daily return"); //$NON-NLS-1$
 
 		HSSFCell cellC1 = row1.createCell((short) 2);
-		cellC1.setCellValue("Average Daily return");
+		cellC1.setCellValue("Average Daily return"); //$NON-NLS-1$
 
 		HSSFCell cellD1 = row1.createCell((short) 3);
-		cellD1.setCellValue("Std dev");
+		cellD1.setCellValue("Std dev"); //$NON-NLS-1$
 
 		HSSFCell cellE1 = row1.createCell((short) 4);
-		cellE1.setCellValue("Sharpe Ratio");
+		cellE1.setCellValue("Sharpe Ratio"); //$NON-NLS-1$
 		
 		HSSFCell cellF1 = row1.createCell((short) 5);
-		cellF1.setCellValue("Close Price");
+		cellF1.setCellValue("Close Price"); //$NON-NLS-1$
 
 		worksheet.setColumnWidth(0, worksheet.getColumnWidth(0)+3000);
 		worksheet.setColumnWidth(1, worksheet.getColumnWidth(1)+3000);
@@ -134,10 +137,10 @@ public class XlsDataReader {
 	public static List<String> getSharpeStocks() {
 		//Decided to keep it manual and may be change weekly after sorting on sharpe ratio e col
 		List<String> sharpeList=new ArrayList<String>();
-		sharpeList.add("CINEMAXIN"); //a2
-		sharpeList.add("HOTELRUGB"); //a3
-		sharpeList.add("WOCKPHARM"); //a4
-		sharpeList.add("THEBYKE"); //a6
+		sharpeList.add("CINEMAXIN"); //a2 //$NON-NLS-1$
+		sharpeList.add("HOTELRUGB"); //a3 //$NON-NLS-1$
+		sharpeList.add("WOCKPHARM"); //a4 //$NON-NLS-1$
+		sharpeList.add("THEBYKE"); //a6 //$NON-NLS-1$
 		return sharpeList;
 	}
 	

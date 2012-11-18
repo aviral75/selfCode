@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import aiwi.Messages;
+
 public class IntegerReading {
 
 	public static List<Integer> getIntegersFromFile(String filePath){
@@ -25,7 +27,7 @@ public class IntegerReading {
 	}
 	
 	public static void main(String[] args) {
-		List<Integer> integersFromFile = getIntegersFromFile("C:\\temp\\number.txt");
+		List<Integer> integersFromFile = getIntegersFromFile(Messages.IntegerReading_NUMBER_LOCATION);
 		for (Integer integer : integersFromFile) {
 			System.out.println(integer);
 		}

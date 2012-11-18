@@ -118,7 +118,7 @@ public class FeederView extends ViewPart {
 		urlList.add("http://www.moneycontrol.com/rss/buzzingstocks.xml");
 		urlList.add("http://www.moneycontrol.com/rss/business.xml");
 		urlList.add("http://finance.yahoo.com/news/category-stocks/rss");
-		urlList.add("http://search.twitter.com/search.atom?q=stock");
+		urlList.add("http://search.twitter.com/search.atom?q=blb");
 		
 		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer.setContentProvider(new ViewContentProvider());

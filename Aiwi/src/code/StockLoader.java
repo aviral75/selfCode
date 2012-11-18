@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Map;
 
+import aiwi.Messages;
+
 public enum StockLoader {
 provider;
 
@@ -15,7 +17,7 @@ public  String getScriptCode(String stkName){
 	if(code!=null)
 		return code;
 	try {
-		Scanner scanner=new Scanner(new File("C:\\temp\\lookup.txt"));
+		Scanner scanner=new Scanner(new File(Messages.StockLoader_LOOKUP_TXT));
 		while(scanner.hasNextLine()){
 			String nextLine = scanner.nextLine();
 			int indexComma = nextLine.indexOf(',');

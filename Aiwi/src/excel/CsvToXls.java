@@ -13,16 +13,18 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import aiwi.Messages;
+
 public class CsvToXls
 {
 	public static void main(String args[]) throws IOException
 	{
-		String baseDir="C:\\Aviral\\stkData\\dataNse";
+		String baseDir=Messages.CsvToXls_NSEFOLDER;
 		File inputDir=new File(baseDir);
 		String[] list = inputDir.list();
 		for (String string : list) {
 			convert(baseDir+File.separator+string,string);
-			System.out.println("done with " + string);
+			System.out.println("done with " + string); //$NON-NLS-1$
 		}
 	}
 	public static void convert (String fName,String sheetName) throws IOException{
@@ -39,7 +41,7 @@ public class CsvToXls
 		while ((thisLine = myInput.readLine()) != null)
 		{
 			al = new ArrayList();
-			String strar[] = thisLine.split(",");
+			String strar[] = thisLine.split(","); //$NON-NLS-1$
 			for(int j=0;j<strar.length;j++)
 			{
 				if(j>0 && j<(strar.length-1)){
@@ -78,7 +80,7 @@ public class CsvToXls
 					if(p==1){
 					HSSFCell cell1 = row.createCell((short) p +1);
 					if(k==0)
-						cell1.setCellValue("daily return");
+						cell1.setCellValue("daily return"); //$NON-NLS-1$
 					else{
 						try{
 							double nV=Double.parseDouble(nextData.get(p).toString());
@@ -93,7 +95,7 @@ public class CsvToXls
 				}
 			}
 			writeEFCells(sheet,arList.size());
-			FileOutputStream fileOut = new FileOutputStream("C:\\Aviral\\stkData\\xlsdataNse\\"+sheetName+".xls");
+			FileOutputStream fileOut = new FileOutputStream(Messages.CsvToXls_XLS_NSEFOLDER+sheetName+".xls"); //$NON-NLS-2$
 			hwb.write(fileOut);
 			fileOut.close();
 		} catch ( Exception ex ) {
@@ -103,7 +105,7 @@ public class CsvToXls
 	private static void writeEFCells(HSSFSheet sheet, int rows) {
 		HSSFRow row = sheet.getRow(0);
 		HSSFCell cell = row.createCell(5);
-		cell.setCellValue("total return");
+		cell.setCellValue("total return"); //$NON-NLS-1$
 		
 		row=sheet.getRow(1);
 		cell=row.createCell(5);
@@ -124,21 +126,21 @@ public class CsvToXls
 		cell=row.createCell(4);
 		cell.setCellValue("avg daily return");
 		cell=row.createCell(5);
-		cell.setCellFormula("AVERAGE(C2:C"+(rows-2)+")");
+		cell.setCellFormula("AVERAGE(C2:C"+(rows-2)+")"); //$NON-NLS-1$ //$NON-NLS-2$
 	
 		
 		row=sheet.getRow(3);
 		cell=row.createCell(4);
-		cell.setCellValue("std dev");
+		cell.setCellValue("std dev"); //$NON-NLS-1$
 		cell=row.createCell(5);
-		cell.setCellFormula("STDEV(C2:C"+(rows-2)+")");
+		cell.setCellFormula("STDEV(C2:C"+(rows-2)+")"); //$NON-NLS-1$ //$NON-NLS-2$
 		
 		
 		row=sheet.getRow(5);
 		cell=row.createCell(4);
-		cell.setCellValue("sharpe ratio");
+		cell.setCellValue("sharpe ratio"); //$NON-NLS-1$
 		cell=row.createCell(5);
-		cell.setCellFormula("SQRT(250)*f3/f4");
+		cell.setCellFormula("SQRT(250)*f3/f4"); //$NON-NLS-1$
 //		double avg=(sheet.getRow(2).getCell(5).getNumericCellValue());
 //		double stdDev=(sheet.getRow(3).getCell(5).getNumericCellValue());
 //		double numericCellValue = Math.sqrt(250)*avg/stdDev;

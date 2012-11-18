@@ -72,7 +72,7 @@ public class BlogWriter {
 		String content=readContents();
 		List<String> sharpeRatioStocks =XlsDataReader.getSharpeStocks();
 		StringBuilder s1 = getHTMLStocks(sharpeRatioStocks);
-		List<String> intraDayStocks = CommonStocks.getIntraDayStocks(false);
+		List<String> intraDayStocks = CommonStocks.getIntraDayStocks(true);
 		StringBuilder s2 = getHTMLStocks(intraDayStocks);
 		content=MessageFormat.format(content, dateForTitle,s1.toString(),s2.toString());
 		return content;
