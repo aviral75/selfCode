@@ -13,6 +13,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.sound.sampled.ReverbType;
+
+import org.eclipse.swt.custom.Bullet;
+
 import code.CommonStocks;
 
 import com.google.gdata.client.blogger.BloggerService;
@@ -55,7 +59,7 @@ public class BlogWriter {
 		feedUri = FEED_URI_BASE + "/" + blogId;
 
 		// Demonstrate how to publish a public post.
-		String dateForTitle = getDateForTitle();
+		String dateForTitle = getDateForTitle(1);
 		String title = "Free Intraday tips for "+dateForTitle+" using algorithms";	
 		String content=getContent(dateForTitle);
 		Entry publicPost = createPost(myService, title,content,
@@ -72,10 +76,23 @@ public class BlogWriter {
 		String content=readContents();
 		List<String> sharpeRatioStocks =XlsDataReader.getSharpeStocks();
 		StringBuilder s1 = getHTMLStocks(sharpeRatioStocks);
-		List<String> intraDayStocks = CommonStocks.getIntraDayStocks(true);
+		String today=getFileDate(getDateForTitle(0));
+		String yesterday=getFileDate(getDateForTitle(-1));
+		List<String> intraDayStocks = CommonStocks.getIntraDayStocks(true,today,yesterday);
 		StringBuilder s2 = getHTMLStocks(intraDayStocks);
 		content=MessageFormat.format(content, dateForTitle,s1.toString(),s2.toString());
 		return content;
+	}
+
+	private static String getFileDate(String dateForTitle) {
+		StringBuilder builder=new StringBuilder();
+		String[] split = dateForTitle.split("-");
+		builder.append(split[2]);
+		builder.append("_");
+		builder.append(split[1]);
+		builder.append("_");
+		builder.append(split[0]);
+		return builder.toString();
 	}
 
 	private static StringBuilder getHTMLStocks(List<String> intraDayStocks) {
@@ -88,7 +105,12 @@ public class BlogWriter {
 		return s1;
 	}
 
-	private static String getDateForTitle() {
+	/**
+	 * @param num number of day previous to tomorrow
+	 * @return tomorrow - num of days
+	 * num 1 is tomorrow num 0 today num -1 yesterday 
+	 */
+	private static String getDateForTitle(int num) {
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");//yyyy_MM_dd");
 		Date date = new Date();
 		String format = dateFormat.format(date.getTime());//+ MILLIS_IN_DAY);
@@ -98,7 +120,7 @@ public class BlogWriter {
 		}else if(day == Calendar.SATURDAY ){
 			format= dateFormat.format(date.getTime()+ 2*MILLIS_IN_DAY);
 		}else {//if(day == Calendar.SUNDAY )
-			format= dateFormat.format(date.getTime()+ 1*MILLIS_IN_DAY);
+			format= dateFormat.format(date.getTime()+ num*MILLIS_IN_DAY);
 		}
 		return format;
 	}

@@ -64,12 +64,12 @@ public class CommonStocks {
 			
 		}
 		
-		public static List<String> getIntraDayStocks(boolean useCache){
+		public static List<String> getIntraDayStocks(boolean useCache,String today,String yesterday){
 			List<String> result1Stocks=new ArrayList<String>();
 			if(!useCache)
 				StockPoll.poll();
-			String prevDayFile="C:\\temp\\data\\stock_2012_11_15.txt";
-			String curDayFile="C:\\temp\\data\\stock_2012_11_16.txt";
+			String prevDayFile="C:\\temp\\data\\stock_"+yesterday+".txt";
+			String curDayFile="C:\\temp\\data\\stock_"+today+".txt";
 			Set<String> stockNames1 =getStockLookup(prevDayFile);
 			Set<String> stockNames2 = getStockLookup(curDayFile);
 			Set<String> commonStocks = getIntersection(stockNames1, stockNames2);
@@ -80,7 +80,7 @@ public class CommonStocks {
 			}
 			if(result1Stocks.size() > 5){
 				BASE_PERCENT+=1.0;
-				return getIntraDayStocks(true);
+				return getIntraDayStocks(true,today,yesterday);
 			}
 			return result1Stocks;
 		}
