@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import aiwi.Activator;
 import aiwi.Messages;
 
 public class IntegerReading {
@@ -27,7 +28,11 @@ public class IntegerReading {
 	}
 	
 	public static void main(String[] args) {
-		List<Integer> integersFromFile = getIntegersFromFile(Messages.IntegerReading_NUMBER_LOCATION);
+		String integerReading_NUMBER_LOCATION = Messages.IntegerReading_NUMBER_LOCATION;
+		if(Activator.OS.equalsIgnoreCase("Linux")){
+			integerReading_NUMBER_LOCATION = Messages.IntegerReading_NUMBER_LOCATION_LINUX;
+		}
+		List<Integer> integersFromFile = getIntegersFromFile(integerReading_NUMBER_LOCATION);
 		for (Integer integer : integersFromFile) {
 			System.out.println(integer);
 		}

@@ -4,6 +4,9 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "aiwi.messages"; //$NON-NLS-1$
+	/*
+	 * Windows paths
+	 */
 	public static String CsvToXls_NSEFOLDER;
 	public static String CsvToXls_XLS_NSEFOLDER;
 	public static String GetPercentage_NSEFOLDER;
@@ -17,6 +20,9 @@ public class Messages extends NLS {
 	public static String StockLoader_LOOKUP_TXT;
 	public static String StockPoll_NUMBER_READING;
 	public static String StockPoll_STOCK_XML;
+	/*
+	 * Linux paths
+	 */
 	public static String CsvToXls_NSEFOLDER_LINUX;
 	public static String CsvToXls_XLS_NSEFOLDER_LINUX;
 	public static String GetPercentage_NSEFOLDER_LINUX;

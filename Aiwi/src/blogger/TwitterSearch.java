@@ -1,6 +1,10 @@
 package blogger;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.List;
+import java.util.Scanner;
 
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -35,7 +39,20 @@ public class TwitterSearch {
 	}
 	
 	public static void main(String[] args) {
-		String searchTweet = searchTweet("RAJ TELE");
-		System.out.println(searchTweet);
+		File f=new File(BlogWriter.PREDICTION_FILE);
+		System.out.println(f.getAbsolutePath());
+		try {
+			Scanner scanner=new Scanner(f);
+			while(scanner.hasNextLine()){
+				String next = scanner.nextLine();
+				String searchTweet = searchTweet(next);
+				System.out.println(searchTweet);
+
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }

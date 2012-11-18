@@ -15,6 +15,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 
+import aiwi.Activator;
 import aiwi.Messages;
 
 public class XlsDataReader {
@@ -24,13 +25,20 @@ public class XlsDataReader {
 	}
 	public static void populateAllData(){
 		try {
-			FileOutputStream fileOut = new FileOutputStream(Messages.XlsDataReader_ALL_NSE_XLS);
+			String xlsDataReader_ALL_NSE_XLS = Messages.XlsDataReader_ALL_NSE_XLS;
+			if(Activator.OS.equalsIgnoreCase("Linux")){
+				xlsDataReader_ALL_NSE_XLS = Messages.XlsDataReader_ALL_NSE_XLS_LINUX;
+			}
+			FileOutputStream fileOut = new FileOutputStream(xlsDataReader_ALL_NSE_XLS);
 			HSSFWorkbook workbook = new HSSFWorkbook();
 			HSSFSheet worksheet = workbook.createSheet("AllStkData"); //$NON-NLS-1$
 			
 			writeHeaderData(workbook, worksheet);
 			int i=1;
 			String baseDir=Messages.XlsDataReader_XLS_NSEFOLDER;
+			if(Activator.OS.equalsIgnoreCase("Linux")){
+				baseDir = Messages.XlsDataReader_XLS_NSEFOLDER_LINUX;
+			}
 			File inputDir=new File(baseDir);
 			String[] list = inputDir.list();
 			for (String string : list) {

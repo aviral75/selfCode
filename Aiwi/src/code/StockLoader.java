@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Map;
 
+import aiwi.Activator;
 import aiwi.Messages;
 
 public enum StockLoader {
@@ -17,7 +18,11 @@ public  String getScriptCode(String stkName){
 	if(code!=null)
 		return code;
 	try {
-		Scanner scanner=new Scanner(new File(Messages.StockLoader_LOOKUP_TXT));
+		String stockLoader_LOOKUP_TXT = Messages.StockLoader_LOOKUP_TXT;
+		if(Activator.OS.equalsIgnoreCase("Linux")){
+			stockLoader_LOOKUP_TXT=Messages.StockLoader_LOOKUP_TXT_LINUX;
+		}
+		Scanner scanner=new Scanner(new File(stockLoader_LOOKUP_TXT));
 		while(scanner.hasNextLine()){
 			String nextLine = scanner.nextLine();
 			int indexComma = nextLine.indexOf(',');

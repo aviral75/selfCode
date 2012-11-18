@@ -1,5 +1,7 @@
 package blogger;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -12,10 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import javax.sound.sampled.ReverbType;
-
-import org.eclipse.swt.custom.Bullet;
 
 import code.CommonStocks;
 
@@ -37,6 +35,7 @@ public class BlogWriter {
 		"http://www.blogger.com/feeds/default/blogs";
 
 	private static final String FEED_URI_BASE = "http://www.blogger.com/feeds";
+	public static final String PREDICTION_FILE = "predictions.txt";
 
 	public static void main(String[] args) {
 		BloggerService myService = new BloggerService("exampleCo-exampleApp-1");
@@ -76,12 +75,39 @@ public class BlogWriter {
 		String content=readContents();
 		List<String> sharpeRatioStocks =XlsDataReader.getSharpeStocks();
 		StringBuilder s1 = getHTMLStocks(sharpeRatioStocks);
-		String today=getFileDate(getDateForTitle(0));
-		String yesterday=getFileDate(getDateForTitle(-1));
+		String today="2012_11_16";//getFileDate(getDateForTitle(0));//stock_2012_11_16.txt
+		String yesterday="2012_11_15";//getFileDate(getDateForTitle(-1));
 		List<String> intraDayStocks = CommonStocks.getIntraDayStocks(true,today,yesterday);
 		StringBuilder s2 = getHTMLStocks(intraDayStocks);
 		content=MessageFormat.format(content, dateForTitle,s1.toString(),s2.toString());
+		writeToFile(sharpeRatioStocks,intraDayStocks);
 		return content;
+	}
+
+	private static void writeToFile(List<String> sharpeRatioStocks,
+			List<String> intraDayStocks) {
+		try {
+			File f=new File(PREDICTION_FILE);
+			if(f.exists()){
+				f.delete();
+			}
+			f.createNewFile();
+			FileWriter fileWriter= new FileWriter(f);
+			for (String string : sharpeRatioStocks) {
+				fileWriter.write(string);
+				fileWriter.write("\n");
+			} 
+			for (String string : intraDayStocks) {
+				fileWriter.write(string);
+				fileWriter.write("\n");
+			} 
+
+			fileWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	private static String getFileDate(String dateForTitle) {

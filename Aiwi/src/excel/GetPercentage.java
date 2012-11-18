@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+import aiwi.Activator;
 import aiwi.Messages;
 
 public class GetPercentage {
@@ -23,7 +24,11 @@ public class GetPercentage {
 //	    String[] names1= new String[]{"CINEMAXIN","HOTELRUGB","RASOYPR","THEBYKE"};
 
 		List<String> tickrList=new ArrayList<String>();
-		File f=new File(Messages.GetPercentage_NSELIST);
+		String getPercentage_NSELIST = Messages.GetPercentage_NSELIST;
+		if(Activator.OS.equalsIgnoreCase("Linux")){
+			getPercentage_NSELIST = Messages.GetPercentage_NSELIST_LINUX;
+		}
+		File f=new File(getPercentage_NSELIST);
 		Scanner scanner;
 		try {
 			scanner = new Scanner(new FileInputStream(f));
@@ -79,7 +84,11 @@ public class GetPercentage {
 
 			BufferedInputStream bis = new BufferedInputStream(inputStream);
 
-			File file = new File(Messages.GetPercentage_NSEFOLDER+stockSymbol+".csv"); //$NON-NLS-2$
+			String getPercentage_NSEFOLDER = Messages.GetPercentage_NSEFOLDER;
+			if(Activator.OS.equalsIgnoreCase("Linux")){
+				getPercentage_NSEFOLDER = Messages.GetPercentage_NSEFOLDER_LINUX;
+			}
+			File file = new File(getPercentage_NSEFOLDER+stockSymbol+".csv"); //$NON-NLS-2$
 			try {
 				file.createNewFile();
 			} catch (IOException e2) {

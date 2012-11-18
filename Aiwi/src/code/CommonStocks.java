@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
+import aiwi.Activator;
+import aiwi.Messages;
+
 public class CommonStocks {
 	static double BASE_PERCENT=4.90;
 	public static Set<String> getStockLookup(String filePath){
@@ -68,8 +71,12 @@ public class CommonStocks {
 			List<String> result1Stocks=new ArrayList<String>();
 			if(!useCache)
 				StockPoll.poll();
-			String prevDayFile="C:\\temp\\data\\stock_"+yesterday+".txt";
-			String curDayFile="C:\\temp\\data\\stock_"+today+".txt";
+			String stockPoll_STOCK_XML = Messages.StockPoll_STOCK_XML;
+			if(Activator.OS.equalsIgnoreCase("Linux")){
+				stockPoll_STOCK_XML = Messages.StockPoll_STOCK_XML_LINUX;
+			}
+			String prevDayFile=stockPoll_STOCK_XML+yesterday+".txt";
+			String curDayFile=stockPoll_STOCK_XML+today+".txt";
 			Set<String> stockNames1 =getStockLookup(prevDayFile);
 			Set<String> stockNames2 = getStockLookup(curDayFile);
 			Set<String> commonStocks = getIntersection(stockNames1, stockNames2);

@@ -26,6 +26,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import aiwi.Activator;
 import aiwi.Messages;
 
 public class StockPoll {
@@ -41,6 +42,9 @@ public class StockPoll {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd"); //$NON-NLS-1$
 		Date date = new Date();
 		String fileName = Messages.StockPoll_STOCK_XML+dateFormat.format(date)+".txt"; //$NON-NLS-2$
+		if(Activator.OS.equalsIgnoreCase("Linux")){
+			fileName = Messages.StockPoll_STOCK_XML_LINUX+dateFormat.format(date)+".txt"; //$NON-NLS-2$
+		}
 		File file = new File(fileName);
 		try {
 		if (!file.exists()) {
@@ -53,7 +57,11 @@ public class StockPoll {
 			BufferedWriter bw = new BufferedWriter(fw);
 
 			// get URL content
-			List<Integer> integersFromFile = IntegerReading.getIntegersFromFile(Messages.StockPoll_NUMBER_READING);
+			String stockPoll_NUMBER_READING = Messages.StockPoll_NUMBER_READING;
+			if(Activator.OS.equalsIgnoreCase("Linux")){
+				stockPoll_NUMBER_READING = Messages.StockPoll_NUMBER_READING_LINUX;
+			}
+			List<Integer> integersFromFile = IntegerReading.getIntegersFromFile(stockPoll_NUMBER_READING);
 			for (Integer number : integersFromFile) {
 				url = new URL("http://www.stockstobuynow.in/applications/api/stockapp/quotes/"+number+".xml"); //$NON-NLS-1$ //$NON-NLS-2$
 				URLConnection conn = url.openConnection();
