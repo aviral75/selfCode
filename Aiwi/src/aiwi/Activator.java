@@ -10,6 +10,7 @@ public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "Aiwi"; //$NON-NLS-1$
+	public static final String OS = System.getProperty("os.name"); 
 
 	// The shared instance
 	private static Activator plugin;

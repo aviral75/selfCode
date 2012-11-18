@@ -13,13 +13,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import aiwi.Activator;
 import aiwi.Messages;
 
 public class YURLTry {
 	
 	public static List<String> readInputFromFile() throws FileNotFoundException{
 		List<String> tickrList=new ArrayList<String>();
-		File f=new File(Messages.YURLTry_NSELIST);
+		String yURLTry_NSELIST = Messages.YURLTry_NSELIST;
+		if(Activator.OS.equalsIgnoreCase("Linux")){
+			yURLTry_NSELIST= Messages.YURLTry_NSELIST_LINUX;
+		}
+		File f=new File(yURLTry_NSELIST);
 		Scanner scanner=new Scanner(new FileInputStream(f));
 		while(scanner.hasNext()){
 			String next = scanner.next();
@@ -76,8 +81,11 @@ public static void writeData(String stockSymbol) {
 		}
 
 		BufferedInputStream bis = new BufferedInputStream(inputStream);
-
-		File file = new File(Messages.YURLTry_NSEFOLDER+stockSymbol+".csv"); //$NON-NLS-2$
+		String yURLTry_NSEFOLDER = Messages.YURLTry_NSEFOLDER;
+		if(Activator.OS.equalsIgnoreCase("Linux")){
+			yURLTry_NSEFOLDER = Messages.YURLTry_NSEFOLDER_LINUX;
+		}
+		File file = new File(yURLTry_NSEFOLDER+stockSymbol+".csv"); //$NON-NLS-2$
 		try {
 			file.createNewFile();
 		} catch (IOException e2) {

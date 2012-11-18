@@ -13,6 +13,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import aiwi.Activator;
 import aiwi.Messages;
 
 public class CsvToXls
@@ -20,6 +21,9 @@ public class CsvToXls
 	public static void main(String args[]) throws IOException
 	{
 		String baseDir=Messages.CsvToXls_NSEFOLDER;
+		if(Activator.OS.equalsIgnoreCase("Linux")){
+			baseDir=Messages.CsvToXls_NSEFOLDER_LINUX;
+		}
 		File inputDir=new File(baseDir);
 		String[] list = inputDir.list();
 		for (String string : list) {
@@ -27,20 +31,18 @@ public class CsvToXls
 			System.out.println("done with " + string); //$NON-NLS-1$
 		}
 	}
+	@SuppressWarnings({ "rawtypes", "deprecation" })
 	public static void convert (String fName,String sheetName) throws IOException{
-		@SuppressWarnings("rawtypes")
 		ArrayList arList=null;
-		ArrayList al=null;
-		//String fName = "test.csv";
+		ArrayList<Comparable> al=null;
 		String thisLine;
-		int count=0;
 		FileInputStream fis = new FileInputStream(fName);
 		DataInputStream myInput = new DataInputStream(fis);
 		int i=0;
-		arList = new ArrayList();
+		arList = new ArrayList<ArrayList<Comparable>>();
 		while ((thisLine = myInput.readLine()) != null)
 		{
-			al = new ArrayList();
+			al = new ArrayList<Comparable>();
 			String strar[] = thisLine.split(","); //$NON-NLS-1$
 			for(int j=0;j<strar.length;j++)
 			{
@@ -68,10 +70,10 @@ public class CsvToXls
 			HSSFSheet sheet = hwb.createSheet(sheetName);
 			for(int k=0;k<arList.size();k++)
 			{
-				ArrayList curData = (ArrayList)arList.get(k);
-				ArrayList nextData= new ArrayList();
+				ArrayList<?> curData = (ArrayList<?>)arList.get(k);
+				ArrayList<?> nextData= new ArrayList<Object>();
 				if(k+1<arList.size())
-					nextData=(ArrayList)arList.get(k+1);
+					nextData=(ArrayList<?>)arList.get(k+1);
 				HSSFRow row = sheet.createRow((short) 0+k);
 				for(int p=0;p<curData.size();p++)
 				{
@@ -95,7 +97,11 @@ public class CsvToXls
 				}
 			}
 			writeEFCells(sheet,arList.size());
-			FileOutputStream fileOut = new FileOutputStream(Messages.CsvToXls_XLS_NSEFOLDER+sheetName+".xls"); //$NON-NLS-2$
+			String csvToXls_XLS_NSEFOLDER = Messages.CsvToXls_XLS_NSEFOLDER;
+			if(Activator.OS.equalsIgnoreCase("Linux")){
+				csvToXls_XLS_NSEFOLDER = Messages.CsvToXls_XLS_NSEFOLDER_LINUX;
+			}
+			FileOutputStream fileOut = new FileOutputStream(csvToXls_XLS_NSEFOLDER+sheetName+".xls"); //$NON-NLS-2$
 			hwb.write(fileOut);
 			fileOut.close();
 		} catch ( Exception ex ) {
