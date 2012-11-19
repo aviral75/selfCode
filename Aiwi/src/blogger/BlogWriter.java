@@ -75,9 +75,9 @@ public class BlogWriter {
 		String content=readContents();
 		List<String> sharpeRatioStocks =XlsDataReader.getSharpeStocks();
 		StringBuilder s1 = getHTMLStocks(sharpeRatioStocks);
-		String today="2012_11_16";//getFileDate(getDateForTitle(0));//stock_2012_11_16.txt
-		String yesterday="2012_11_15";//getFileDate(getDateForTitle(-1));
-		List<String> intraDayStocks = CommonStocks.getIntraDayStocks(true,today,yesterday);
+		String today=getFileDate(getDateForTitle(0));//stock_2012_11_16.txt
+		String yesterday=getFileDate(getDateForTitle(-1));
+		List<String> intraDayStocks = CommonStocks.getIntraDayStocks(false,today,yesterday);
 		StringBuilder s2 = getHTMLStocks(intraDayStocks);
 		content=MessageFormat.format(content, dateForTitle,s1.toString(),s2.toString());
 		writeToFile(sharpeRatioStocks,intraDayStocks);
@@ -146,6 +146,9 @@ public class BlogWriter {
 		}else if(day == Calendar.SATURDAY ){
 			format= dateFormat.format(date.getTime()+ 2*MILLIS_IN_DAY);
 		}else {//if(day == Calendar.SUNDAY )
+			if(day == Calendar.MONDAY && num ==-1){
+				num=-3;
+			}
 			format= dateFormat.format(date.getTime()+ num*MILLIS_IN_DAY);
 		}
 		return format;
