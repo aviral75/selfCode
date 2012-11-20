@@ -145,9 +145,9 @@ public class XlsDataReader {
 	public static List<String> getSharpeStocks() {
 		//Decided to keep it manual and may be change weekly after sorting on sharpe ratio e col
 		List<String> sharpeList=new ArrayList<String>();
-		sharpeList.add("CINEMAXIN"); //a2 //$NON-NLS-1$
+		sharpeList.add("CLNINDIA"); //a2 //$NON-NLS-1$
 //		sharpeList.add("MINDACORP"); //a3 //$NON-NLS-1$
-		sharpeList.add("RASOYPR"); //a4 //$NON-NLS-1$
+		sharpeList.add("L&TFH"); //a4 //$NON-NLS-1$
 		sharpeList.add("THEBYKE"); //a6 //$NON-NLS-1$
 		return sharpeList;
 	}
